@@ -7,6 +7,7 @@ import {
   IconSettings,
   IconLogout,
 } from "@tabler/icons-react"
+import { useSession } from "next-auth/react"
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import { NavUser } from "@/components/nav-user"
@@ -18,13 +19,14 @@ const navItems = [
   { title: "Logout", url: "/logout", icon: IconLogout },
 ]
 
-const user = {
-  name: "User Name",
-  email: "user@email.com",
-  avatar: "/avatars/default.jpg",
-}
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = useSession()
+  const user = {
+    name: session?.user?.name || "User Name",
+    email: session?.user?.email || "user@email.com",
+    avatar: session?.user?.image || "/avatars/default.jpg",
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

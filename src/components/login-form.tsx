@@ -34,7 +34,7 @@ export function LoginForm({
       password,
     })
     setLoading(false)
-    if (res?.error) setError("Invalid email or password")
+    if (res?.error) setError(res.error)
     // else: you can redirect or reload here if needed
   }
 

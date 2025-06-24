@@ -5,6 +5,7 @@ import { compare } from "bcryptjs"
 import prisma from "@/lib/prisma"
 
 export const authOptions = {
+  debug: true,
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -14,12 +15,21 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null
-        const user = await prisma.user.findUnique({ where: { email: credentials.email } })
-        if (!user) return null
-        const isValid = await compare(credentials.password, user.passwordHash)
-        if (!isValid) return null
-        return { id: user.id, email: user.email }
+        if (!credentials?.email || !credentials?.password) {
+          console.error("Missing credentials", credentials);
+          return null;
+        }
+        const user = await prisma.user.findUnique({ where: { email: credentials.email } });
+        if (!user) {
+          console.error("User not found:", credentials.email);
+          return null;
+        }
+        const isValid = await compare(credentials.password, user.passwordHash);
+        if (!isValid) {
+          console.error("Invalid password for:", credentials.email);
+          return null;
+        }
+        return { id: user.id, email: user.email };
       },
     }),
   ],
@@ -32,4 +42,4 @@ export const authOptions = {
 }
 
 const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST } 
+export { handler as GET, handler as POST }
