@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,11 +15,14 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
-  workSessions WorkSession[]
+  id             String    @id @default(uuid())
+  email          String    @unique
+  passwordHash   String
+  createdAt      DateTime  @default(now())
+  emailVerified  DateTime?
+  accounts       Account[]
+  sessions       Session[]
+  workSessions   WorkSession[]
 }
 
 model WorkSession {
@@ -29,4 +32,28 @@ model WorkSession {
   loginAt         DateTime
   logoutAt        DateTime?
   durationMinutes Int?
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  user               User    @relation(fields: [userId], references: [id])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
 }
