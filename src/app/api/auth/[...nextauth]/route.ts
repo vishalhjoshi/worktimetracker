@@ -19,7 +19,7 @@ export const authOptions = {
           console.error("Missing credentials", credentials);
           return null;
         }
-        const user = await prisma.user.findUnique({ where: { email: credentials.email } });
+        const user = await prisma.user.findUnique({ where: { email: credentials.email }, select: { id: true, email: true, name: true, passwordHash: true } });
         if (!user) {
           console.error("User not found:", credentials.email);
           return null;
@@ -29,7 +29,7 @@ export const authOptions = {
           console.error("Invalid password for:", credentials.email);
           return null;
         }
-        return { id: user.id, email: user.email };
+        return { id: user.id, email: user.email, name: user.name };
       },
     }),
   ],
@@ -38,6 +38,22 @@ export const authOptions = {
   pages: {
     signIn: "/login",
     error: "/login",
+  },
+  callbacks: {
+    async session({ session, token }: { session: any, token: any }) {
+      if (session.user && token) {
+        session.user.name = token.name;
+        session.user.id = token.id;
+      }
+      return session;
+    },
+    async jwt({ token, user }: { token: any, user: any }) {
+      if (user) {
+        token.name = user.name;
+        token.id = user.id;
+      }
+      return token;
+    },
   },
 }
 

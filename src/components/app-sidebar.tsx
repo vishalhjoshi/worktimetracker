@@ -7,7 +7,7 @@ import {
   IconSettings,
   IconLogout,
 } from "@tabler/icons-react"
-import { useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import { NavUser } from "@/components/nav-user"
@@ -16,7 +16,6 @@ const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
   { title: "Reports", url: "/reports", icon: IconReport },
   { title: "Settings", url: "/settings", icon: IconSettings },
-  { title: "Logout", url: "/logout", icon: IconLogout },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -33,8 +32,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="/dashboard">
-                <span className="text-base font-semibold">WorkTimeTrack</span>
+              <a href="/dashboard" className="flex items-center gap-2">
+                <img src="/logo.svg" alt="Logo" className="h-7 w-7" />
+                <span className="text-base font-semibold">Work Time Tracker</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -52,6 +52,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <button type="button" onClick={() => signOut({ callbackUrl: '/login' })} className="flex items-center gap-2 w-full">
+                <IconLogout className="size-4" />
+                <span>Logout</span>
+              </button>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>

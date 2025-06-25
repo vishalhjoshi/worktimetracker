@@ -336,38 +336,6 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   )
 }
 
-// Mock session data
-const sessions = [
-  { start: "09:00", end: "12:00", duration: "3h 0m" },
-  { start: "13:00", end: "15:30", duration: "2h 30m" },
-  { start: "16:00", end: "17:00", duration: "1h 0m" },
-]
-
-export function DataTable() {
-  return (
-    <div className="overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Start</TableHead>
-            <TableHead>End</TableHead>
-            <TableHead>Duration</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sessions.map((session, i) => (
-            <TableRow key={i}>
-              <TableCell>{session.start}</TableCell>
-              <TableCell>{session.end}</TableCell>
-              <TableCell>{session.duration}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  )
-}
-
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -544,5 +512,36 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
+  )
+}
+
+export function DataTable({ sessions = [], timezone = "UTC" }: { sessions: any[], timezone?: string }) {
+  return (
+    <div className="overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Date</TableHead>
+            <TableHead>Start</TableHead>
+            <TableHead>End</TableHead>
+            <TableHead>Duration</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sessions.map((session, i) => {
+            const login = new Date(new Date(session.loginAt).toLocaleString("en-US", { timeZone: timezone }))
+            const logout = session.logoutAt ? new Date(new Date(session.logoutAt).toLocaleString("en-US", { timeZone: timezone })) : null
+            return (
+              <TableRow key={i} className="hover:bg-accent/30 transition-colors">
+                <TableCell>{login.toLocaleDateString(undefined, { timeZone: timezone })}</TableCell>
+                <TableCell>{login.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: timezone })}</TableCell>
+                <TableCell>{logout ? logout.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: timezone }) : '-'}</TableCell>
+                <TableCell>{session.durationMinutes !== null && session.durationMinutes !== undefined ? `${Math.floor(session.durationMinutes / 60)}h ${session.durationMinutes % 60}m` : '-'}</TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+    </div>
   )
 }

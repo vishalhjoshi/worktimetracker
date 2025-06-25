@@ -23,6 +23,8 @@ model User {
   accounts       Account[]
   sessions       Session[]
   workSessions   WorkSession[]
+  timezone       String?
+  name           String?
 }
 
 model WorkSession {

@@ -32,27 +32,29 @@ import {
 
 export const description = "An interactive area chart"
 
-// Mock work hours data for current month
-const workData = Array.from({ length: 30 }, (_, i) => ({
-  date: `2024-06-${String(i + 1).padStart(2, "0")}`,
-  hours: Math.round(Math.random() * 8 * 10) / 10, // 0-8 hours, 1 decimal
-}))
+function getWorkData(sessions: any[], timezone: string) {
+  // Aggregate hours per day for the current month in user's timezone
+  const now = new Date()
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
+  const data: { date: string, hours: number }[] = []
+  for (let i = 1; i <= daysInMonth; i++) {
+    const date = new Date(Date.UTC(now.getFullYear(), now.getMonth(), i))
+    const dateStr = date.toLocaleDateString("en-CA", { timeZone: timezone })
+    data.push({ date: dateStr, hours: 0 })
+  }
+  sessions.forEach(s => {
+    const login = new Date(new Date(s.loginAt).toLocaleString("en-US", { timeZone: timezone }))
+    if (login.getMonth() === now.getMonth() && login.getFullYear() === now.getFullYear()) {
+      const loginDay = login.toLocaleDateString("en-CA", { timeZone: timezone })
+      const idx = data.findIndex(d => d.date === loginDay)
+      const duration = s.durationMinutes || 0
+      if (idx !== -1) data[idx].hours += Math.round((duration / 60) * 10) / 10
+    }
+  })
+  return data
+}
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  desktop: {
-    label: "Desktop",
-    color: "var(--primary)",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "var(--primary)",
-  },
-} satisfies ChartConfig
-
-export function ChartAreaInteractive() {
+export function ChartAreaInteractive({ sessions = [], timezone = "UTC" }: { sessions: any[], timezone?: string }) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
 
@@ -62,9 +64,10 @@ export function ChartAreaInteractive() {
     }
   }, [isMobile])
 
+  const workData = getWorkData(sessions, timezone)
   const filteredData = workData.filter((item) => {
-    const date = new Date(item.date)
-    const referenceDate = new Date("2024-06-30")
+    const date = new Date(item.date + 'T00:00:00Z')
+    const referenceDate = new Date()
     let daysToSubtract = 90
     if (timeRange === "30d") {
       daysToSubtract = 30

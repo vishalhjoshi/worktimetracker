@@ -20,7 +20,11 @@ export default function Page() {
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-sm flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-2 mt-2 mb-4">
+          <img src="/logo.svg" alt="Logo" className="h-12 w-12" />
+          <span className="text-xl font-bold tracking-tight">Work Time Tracker</span>
+        </div>
         {showSignup ? (
           <SignupForm onSwitchToLogin={() => setShowSignup(false)} />
         ) : (
