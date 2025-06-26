@@ -28,14 +28,16 @@ export function LoginForm({
     e.preventDefault()
     setLoading(true)
     setError("")
+
     const res = await signIn("credentials", {
-      redirect: false,
       email,
       password,
     })
-    setLoading(false)
-    if (res?.error) setError(res.error)
-    // else: you can redirect or reload here if needed
+
+    if (res?.error) {
+      setError(res.error)
+      setLoading(false)
+    }
   }
 
   return (
