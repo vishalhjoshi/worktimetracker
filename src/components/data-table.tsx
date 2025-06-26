@@ -65,10 +65,11 @@ const columns: ColumnDef<WorkSession>[] = [
   },
 ];
 
-export function DataTable({ sessions = [] }: { sessions: WorkSession[], timezone?: string }) {
+export function DataTable<T>({ sessions = [], columns: customColumns }: { sessions: T[], columns?: ColumnDef<T>[] }) {
+  const usedColumns = customColumns || (columns as ColumnDef<T>[]);
   const table = useReactTable({
     data: sessions,
-    columns,
+    columns: usedColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -116,7 +117,7 @@ export function DataTable({ sessions = [] }: { sessions: WorkSession[], timezone
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={usedColumns.length}
                   className="h-24 text-center"
                 >
                   No results.

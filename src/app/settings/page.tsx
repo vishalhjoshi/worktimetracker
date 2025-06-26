@@ -2,11 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 const timezones = [
   "UTC",
@@ -46,43 +43,30 @@ export default function SettingsPage() {
   }
 
   return (
-    <SidebarProvider
-      style={{
-        "--sidebar-width": "calc(var(--spacing) * 72)",
-        "--header-height": "calc(var(--spacing) * 12)",
-      } as React.CSSProperties}
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <div className="flex flex-1 flex-col items-center justify-center p-6 md:p-10">
-          <Card className="w-full max-w-md shadow-lg border">
-            <CardHeader>
-              <CardTitle>Settings</CardTitle>
-              <CardDescription>Manage your account preferences</CardDescription>
-            </CardHeader>
-            <Separator className="mb-4" />
-            <CardContent className="flex flex-col gap-6">
-              <div>
-                <label htmlFor="timezone" className="block mb-2 font-medium">Timezone</label>
-                <Select value={timezone} onValueChange={setTimezone}>
-                  <SelectTrigger id="timezone" className="w-full">
-                    <SelectValue placeholder="Select timezone" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {timezones.map(tz => (
-                      <SelectItem key={tz} value={tz}>{tz}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button onClick={handleSave} disabled={loading}>
-                {loading ? "Saving..." : "Save"}
-              </Button>
-              {success && <div className="text-green-600 text-sm">{success}</div>}
-            </CardContent>
-          </Card>
+    <div className="flex flex-1 flex-col ml-2 md:ml-4">
+      <div className="@container/main flex flex-1 flex-col gap-2">
+        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 max-w-md">
+          <h1 className="text-2xl font-bold">Settings</h1>
+          <Separator className="mb-2" />
+          <div>
+            <label htmlFor="timezone" className="block mb-2 font-medium">Timezone</label>
+            <Select value={timezone} onValueChange={setTimezone}>
+              <SelectTrigger id="timezone" className="w-full">
+                <SelectValue placeholder="Select timezone" />
+              </SelectTrigger>
+              <SelectContent>
+                {timezones.map(tz => (
+                  <SelectItem key={tz} value={tz}>{tz}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button onClick={handleSave} disabled={loading}>
+            {loading ? "Saving..." : "Save"}
+          </Button>
+          {success && <div className="text-green-600 text-sm">{success}</div>}
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+    </div>
   )
 } 
