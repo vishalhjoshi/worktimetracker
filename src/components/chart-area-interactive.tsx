@@ -6,33 +6,17 @@ import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group"
 
-export const description = "An interactive area chart"
+interface WorkSession {
+  loginAt: string | Date;
+  durationMinutes?: number;
+}
 
-function getWorkData(sessions: any[], timezone: string) {
+function getWorkData(sessions: WorkSession[], timezone: string) {
   // Aggregate hours per day for the current month in user's timezone
   const now = new Date()
   const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
@@ -54,7 +38,7 @@ function getWorkData(sessions: any[], timezone: string) {
   return data
 }
 
-export function ChartAreaInteractive({ sessions = [], timezone = "UTC" }: { sessions: any[], timezone?: string }) {
+export function ChartAreaInteractive({ sessions = [], timezone = "UTC" }: { sessions: WorkSession[], timezone?: string }) {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("90d")
 

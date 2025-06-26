@@ -10,13 +10,11 @@ import {
   SidebarInset,
   SidebarProvider,
 } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
 
 export default function Page() {
   const { data: session } = useSession()
   const [working, setWorking] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [sessions, setSessions] = useState([])
   const [timezone, setTimezone] = useState("")
 
@@ -37,10 +35,8 @@ export default function Page() {
 
   // Handle login/logout to work
   const handleToggleWork = async () => {
-    setLoading(true)
     const method = working ? "PATCH" : "POST"
     const res = await fetch("/api/work-session", { method })
-    setLoading(false)
     if (res.ok) {
       setWorking(!working)
       // Optionally refetch sessions

@@ -3,7 +3,6 @@
 import {
   IconCreditCard,
   IconDotsVertical,
-  IconLogout,
   IconNotification,
   IconUserCircle,
 } from "@tabler/icons-react"
@@ -28,8 +27,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import Link from "next/link"
-import { signOut } from "next-auth/react"
 import { LogoutButton } from "./logout-button"
 
 export function NavUser({

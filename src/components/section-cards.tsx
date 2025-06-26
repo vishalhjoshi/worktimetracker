@@ -1,14 +1,16 @@
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
-
-import { Badge } from "@/components/ui/badge"
 import {
   Card,
-  CardAction,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+interface WorkSession {
+  loginAt: string | Date;
+  logoutAt?: string | Date | null;
+  durationMinutes?: number;
+}
 
 function formatDuration(minutes: number) {
   const h = Math.floor(minutes / 60)
@@ -16,7 +18,7 @@ function formatDuration(minutes: number) {
   return `${h}h ${m}m`
 }
 
-export function SectionCards({ sessions = [], timezone = "UTC" }: { sessions: any[], timezone?: string }) {
+export function SectionCards({ sessions = [], timezone = "UTC" }: { sessions: WorkSession[], timezone?: string }) {
   const now = new Date()
   const todayStr = now.toLocaleDateString("en-CA", { timeZone: timezone })
   const thisMonth = now.toLocaleString("en-US", { timeZone: timezone, month: "2-digit" })
@@ -52,7 +54,7 @@ export function SectionCards({ sessions = [], timezone = "UTC" }: { sessions: an
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-6 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-md *:data-[slot=card]:border *:data-[slot=card]:hover:shadow-lg *:data-[slot=card]:transition-shadow lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card cursor-pointer">
         <CardHeader>
-          <CardDescription className="text-base">Today's Work Time</CardDescription>
+          <CardDescription className="text-base">Today&apos;s Work Time</CardDescription>
           <CardTitle className="text-3xl font-bold">{formatDuration(todayMinutes)}</CardTitle>
         </CardHeader>
         <CardFooter className="text-muted-foreground">Total hours worked today</CardFooter>

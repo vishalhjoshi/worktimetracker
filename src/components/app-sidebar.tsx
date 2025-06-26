@@ -11,6 +11,7 @@ import { useSession, signOut } from "next-auth/react"
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import { NavUser } from "@/components/nav-user"
+import Image from "next/image"
 
 const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: IconDashboard },
@@ -33,7 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <a href="/dashboard" className="flex items-center gap-2">
-                <img src="/logo.svg" alt="Logo" className="h-7 w-7" />
+                <Image src="/logo.svg" alt="Logo" width={28} height={28} />
                 <span className="text-base font-semibold">Work Time Tracker</span>
               </a>
             </SidebarMenuButton>

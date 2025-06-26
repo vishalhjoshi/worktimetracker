@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Clock, Users, BarChart3, Shield, Zap, CheckCircle, Link } from "lucide-react";
+import { ArrowRight, Clock, Users, BarChart3, Shield, Zap, CheckCircle } from "lucide-react";
 import Image from "next/image";
 
 const Index = () => {
