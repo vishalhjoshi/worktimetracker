@@ -1,43 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Clock, Users, BarChart3, Shield, Zap, CheckCircle } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Clock, CheckCircle } from "lucide-react";
+import { Hero2 } from "@/components/ui/hero-2-1";
+import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
 
 const Index = () => {
-  const features = [
-    {
-      icon: Clock,
-      title: "Real-time Tracking",
-      description: "Track work hours in real-time with precise start and stop functionality"
-    },
-    {
-      icon: BarChart3,
-      title: "Detailed Analytics", 
-      description: "Comprehensive reports and charts to analyze productivity patterns"
-    },
-    {
-      icon: Users,
-      title: "Team Management",
-      description: "Perfect for small teams with collaborative time tracking features"
-    },
-    {
-      icon: Shield,
-      title: "Secure & Private",
-      description: "Your data is protected with enterprise-grade security"
-    },
-    {
-      icon: Zap,
-      title: "Lightning Fast",
-      description: "Built with modern tech stack for optimal performance"
-    },
-    {
-      icon: CheckCircle,
-      title: "Easy Setup",
-      description: "Get started in minutes with our intuitive onboarding process"
-    }
-  ];
-
   const pricing = [
     {
       name: "Starter",
@@ -83,102 +51,12 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Image src="/logo.svg" alt="WorkTimeTrack" width={32} height={32} />
-            <span className="text-xl font-bold bg-gradient-to-r from-[#442781] to-[#ff7916] bg-clip-text text-transparent">
-              Work Time Tracker
-            </span>
-          </div>
-          
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-600 hover:text-[#442781] transition-colors">Features</a>
-            <a href="#pricing" className="text-gray-600 hover:text-[#442781] transition-colors">Pricing</a>
-            <a href="#about" className="text-gray-600 hover:text-[#442781] transition-colors">About</a>
-          </nav>
-
-          <div className="flex items-center space-x-4">
-            <Button asChild variant="ghost" className="text-[#442781] hover:text-[#ff7916]">
-              <a href="/login">Sign In</a>
-            </Button>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center max-w-4xl">
-          <Badge className="mb-6 bg-gradient-to-r from-[#ff7916]/10 to-[#442781]/10 text-[#442781] border-[#442781]/20">
-            ✨ Employee Time Tracking Made Simple
-          </Badge>
-          
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#442781] via-[#a992db] to-[#ff7916] bg-clip-text text-transparent leading-tight">
-            Track Time,
-            <br />
-            Boost Productivity
-          </h1>
-          
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            The modern time tracking solution designed for small teams. Get real-time insights, 
-            detailed analytics, and seamless collaboration in one powerful platform.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-[#ff7916] to-[#442781] hover:from-[#442781] hover:to-[#ff7916] text-white px-8 py-3 text-lg"
-              asChild
-            >
-              <a href="/login">
-                Start Free Trial
-              </a>
-            </Button>
-            <Button variant="outline" size="lg" className="border-[#442781] text-[#442781] hover:bg-[#442781] hover:text-white px-8 py-3 text-lg" asChild>
-              <a href="#demo">
-                Watch Demo
-              </a>
-            </Button>
-          </div>
-
-          <div className="text-sm text-gray-500 mb-8">
-            ✓ No credit card required  ✓ 14-day free trial  ✓ Setup in 2 minutes
-          </div>
-        </div>
-      </section>
-
-      {/* Dashboard Preview */}
-      <section className="py-16 px-4 bg-gradient-to-br from-[#442781]/5 to-[#ff7916]/5">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#442781] mb-4">
-              See WorkTimeTrack in Action
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Experience the power of modern time tracking with our intuitive dashboard
-            </p>
-          </div>
-          
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#ff7916]/20 to-[#442781]/20 rounded-2xl blur-xl transform rotate-1"></div>
-            <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-[#442781] to-[#ff7916] h-2"></div>
-              <Image 
-                src="/dashboard.png"
-                alt="WorkTimeTrack Dashboard"
-                className="w-full h-auto"
-                width={1000}
-                height={1000}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero2 />
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4">
+      <section id="features" className="py-20 px-4 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#442781] mb-4">
@@ -189,19 +67,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-white to-gray-50">
-                <CardContent className="p-8">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#ff7916] to-[#442781] flex items-center justify-center mb-6">
-                    <feature.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-[#442781] mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <FeaturesSectionWithHoverEffects />
         </div>
       </section>
 
@@ -226,7 +92,7 @@ const Index = () => {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-4">
+      <section id="pricing" className="py-20 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#442781] mb-4">
